@@ -1,0 +1,6 @@
+<%= horizontal_form_for @round do |round| %>
+  <%= round.input :start_date, as: :date_picker %>
+  <%= round.input :end_date, as: :date_picker %>
+  <%= round.submit %> - <%= link_to_back rounds_path %>  
+<% end %>
+

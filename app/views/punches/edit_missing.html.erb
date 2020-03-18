@@ -1,0 +1,23 @@
+<% title = "Inserisci timbratura di #{@punch.student} il #{l(@punch.day, format: :as_date)}" %>
+
+<%= dm_form_for @punch, url: missing_punch_path(@punch), method: :put, title: title do |f| %>
+  <%= f.dm_error_notification %>  
+  <% if @punch.arrival %>
+    <p>
+    Entrata: <%= l(@punch.arrival, format: :as_hour) %>
+    </p>
+    <p>
+    Uscita: <%= select_hour_minute(@punch.arrival.hour + 1) %>  
+    </p>
+  <% else %>
+    <p>
+    Entrata: <%= select_hour_minute(@punch.departure.hour - 1 ) %>   
+    </p>
+    <p>
+    Uscita: <%= l(@punch.departure, format: :as_hour) %>  
+    </p>
+  <% end %>
+  <p>
+  <%= f.submit 'Inserisci timbratura' %> - <%= link_to_back edit_profile_path(@punch.profile) %>  
+  </p>
+<% end %>
