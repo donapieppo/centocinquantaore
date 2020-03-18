@@ -1,0 +1,71 @@
+<div class="row">
+<div class="col-md-6">
+  <%= dm_card title: "Marcature incomplete" do %>    
+    <ul>
+      <% @missing_punches.each do |punch| %>  
+        <li>
+          <%= link_to punch, edit_missing_punch_path(punch) %> -
+          <strong><%= link_to punch.student, edit_profile_path(punch.profile) %></strong>
+        </li>
+      <% end %>
+    </ul>
+  <% end %>
+</div>
+<div class="col-md-6">
+  <%= dm_card title: "Studenti in servizio adesso" do %>
+    <ul>
+      <% @present_punches.each do |punch| %>  
+        <li>
+          <%= l punch.arrival, format: :as_hour %> - 
+          <% if current_user.owns_profile?(punch.profile) %>  
+            <%= link_to punch.profile.student, edit_profile_path(punch.profile) %> 
+          <% else %>
+            <%= punch.student %>  
+          <% end %>
+        </li>
+      <% end %>
+    </ul>
+  <% end %>
+</div>
+</div>
+
+<h2>Prospetto ore svolte (<%= @current_round %>)</h2>
+<table class="tablesorter table-sm table-hover">
+  <thead>
+  <tr>
+    <th>Nome</th>
+    <th>Email</th>
+    <th>Inizio</th>
+    <th>Area</th>
+    <th>Ore svolte</th>
+    <th></th>
+  </tr>
+  </thead>
+  <tbody>
+    <% @profiles.each do |profile| %>  
+      <% if profile.resign %>  
+        <% pclass = "profile_resign" %>
+      <% elsif profile.done %>
+        <% pclass = "profile_done" %>
+      <% elsif @total_presences[profile.id] %>  
+        <% pclass = "profile_started" %> 
+      <% end %>
+      <tr <%= raw "class=\"#{pclass}\"" if pclass %>>
+        <td><%= profile.student.cn_militar %></td>
+        <td><%= profile.student.upn %></td>
+        <td>
+          <%= l(profile.startdate, format: :date_picker) if @total_presences[profile.id] %>
+          <%= "finito: " + l(profile.enddate, format: :date_picker) if (profile.done and ! profile.resign) %>
+          <%= "rinunciato" if profile.resign %>
+        </td>
+        <td>
+          <%= profile.areas_string %>
+        </td>
+        <td><%= @total_presences[profile.id] if @total_presences[profile.id] %></td>
+        <td>
+          <%= profile.done ? link_to(icon('search'), profile_path(profile)) : link_to_edit(edit_profile_path(profile)) %>
+        </td> 
+      </tr>
+    <% end %>
+  </tbody>
+</table>

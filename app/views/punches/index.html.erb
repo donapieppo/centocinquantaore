@@ -1,0 +1,31 @@
+<% if @profile %>
+  <% if @profile.active? %>
+    <div class="bigbuttons">
+      <%= form_tag in_punches_path do %>
+        <input type="submit" value='Timbra entrata'>
+      <% end %>
+      <%= form_tag out_punches_path do %>
+        <input type="submit" value='Timbra uscita'>
+      <% end %>
+    </div>
+  <% else %>  
+    <p class="strong-info">Il suo profilo non è abilitato, la preghiamo di contattare il suo referente.</p>
+  <% end %>
+
+  <%= dm_card title: 'Elenco Timbrature' do  %>  
+    <div class="btn btn-outline-success mb-2">Totale ore svolte: <strong><%= @profile.total_presence %></strong>.</div>
+
+    <ul class="punches">
+      <% @punches.each do |punch| %>
+        <li class="py-2 <%= (punch.arrival and punch.departure) ? '' : 'bg-warning' %>  ">
+           <%= punch %> 
+        </li>
+      <% end %>
+    </ul>
+  <% end %>
+<% else %>
+  <p class="strong-info">
+  Il suo utente non è abilitato a svolgere le 150 ore in questo periodo.<br/>
+  La preghiamo di contattare il proprio referente.
+  </p>
+<% end %>

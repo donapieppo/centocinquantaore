@@ -1,0 +1,27 @@
+<h1><%= @profile.student %> <small>(<%= @profile.student.employeeNumber %>) - <%= @current_round %></small></h1>
+
+<strong><%= @profile.areas_string %></strong>: <%= l(@profile.startdate, :format => :as_date) if @profile.startdate %> - <%= l(@profile.enddate, :format => :as_date) if @profile.enddate%> 
+
+<h4>Elenco timbrature <small>(totale <%= @profile.total_presence %> ore approssimate alla mezz'ora)</small></h4>
+<ul class="list-group">
+  <% @punches.each do |punch| %>
+    <li class="list-group-item"><%= punch %></li>
+  <% end %>
+</ul>
+
+<p class="info">
+  <%= t(:general_notes) %>:
+  <br/>
+  <%= @profile.general_notes %>
+</p>
+
+<p class="info">
+  <%= t(:area_notes) %>:
+  <br/>
+  <%= @profile.area_notes %>
+</p>
+
+<% if ! @profile.done %>  
+  <%= link_to('Modifica', edit_profile_path(@profile), class: :button)  %> -
+<% end %>
+<%= link_to_back profiles_path %>  

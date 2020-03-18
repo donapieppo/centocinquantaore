@@ -1,0 +1,58 @@
+<h1><%= @profile.student %> <small>- <%= @profile.round %> (<%= @total_presence %> ore svolte)</small></h1>
+
+<div class="row">
+  <div class="col-md-7">
+    <%= dm_form_for @profile do |profile| %>  
+      <dl class="dl-horizontal">
+        <%= dl_field :name,           @profile.student.name %>  
+        <%= dl_field :surname,        @profile.student.surname %>  
+        <%= dl_field :employeeNumber, @profile.student.employeeNumber %>
+        <%= dl_field :area,           @profile.areas_string %>
+        <dt>Mail</dt>
+        <dd><%= mail_to @profile.student.email %></dd>
+        <%= dl_field :telephone,      @profile.student.telephone %>  
+      </dl>
+      <hr/>
+      <% if current_user.owns_profile_as_secretary?(@profile) %>
+        <%= profile.association :areas, collection: @profile.organization.areas, include_blank: false, as: :check_boxes %>  
+        <%= profile.input :general_notes %>
+        <%= profile.input :telephone %>  
+      <% else %>
+        <%= profile.input :area_notes %>  
+      <% end %>
+      <%= profile.submit %>  
+    <% end %>
+
+    <p class="info">
+      <%= current_user.owns_profile_as_secretary?(@profile) ? t(:area_notes) : t(:general_notes) %>: 
+      <%= current_user.owns_profile_as_secretary?(@profile) ? @profile.area_notes : @profile.general_notes %>
+    </p>
+
+    <% if current_user.owns_profile_as_secretary?(@profile) %>
+      <fieldset>
+        <legend>Chiusure</legend>
+        <% if @total_presence > 0 %>
+          <%= link_to_close_profile(@profile) %>  
+        <% end %>
+        <%= link_to_resign_profile(@profile) %>  
+      </fieldset>
+    <% end %>
+  </div>
+
+  <div class="col-md-5">
+    <%= dm_card title: "Elenco timbrature (#{@total_presence} ore svolte):" do %> 
+      <ul class="mb-3">
+        <% @punches.each do |punch| %>  
+          <% alert_class = 'text-danger' if punch.uncomplete? %>  
+          <li class="<%= alert_class %> mb-1">
+          <%= punch %>
+          <span class="float-right">
+            <%= link_to_edit   edit_punch_path(punch) %> 
+            <%= link_to_delete punch_path(punch) %> 
+          </span>
+          </li>
+        <% end %>
+      </ul>
+      <p><%= link_to_new_punch(@profile) %></p>
+    <% end %>
+</div>
