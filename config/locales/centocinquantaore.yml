@@ -1,0 +1,33 @@
+it:
+  punch: Timbratura
+  profile: Studente
+  general_notes: Note
+  area_notes: Note del responsabile di area
+  area: Area
+  telephone: Telefono
+  employeeNumber: Matricola
+
+  activerecord:
+    models:
+      round: Turno
+      punch: Timbratura
+      profile: Profilo Studente
+    attributes:
+      round:
+        start_date: Inizio turno
+        end_date: Fine turno
+      profile:
+        areas:         Aree
+        general_notes: Note 
+        area_notes:    Note del responsabile di area
+        email:         Email
+        telephone:     Telefono
+      area:
+        name: Nome
+
+  time:
+    formats:
+      as_hour: ! '%H:%M'
+      as_date: ! '%d %b %Y'
+      as_datepicker: ! '%Y-%m-%d'
+
