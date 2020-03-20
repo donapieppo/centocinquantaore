@@ -5,8 +5,6 @@ class Organization < ApplicationRecord
 
   default_scope { order('organizations.name') }
 
-  validates_uniqueness_of :name, message: "Esiste già una struttura con lo stesso nome."
-
   def to_s
     self.name
   end
