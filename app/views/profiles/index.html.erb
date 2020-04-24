@@ -17,7 +17,7 @@
       <% @present_punches.each do |punch| %>  
         <li>
           <%= l punch.arrival, format: :as_hour %> - 
-          <% if current_user.owns_profile?(punch.profile) %>  
+          <% if policy(punch.profile).edit? %>  
             <%= link_to punch.profile.student, edit_profile_path(punch.profile) %> 
           <% else %>
             <%= punch.student %>  
@@ -63,7 +63,7 @@
         </td>
         <td><%= @total_presences[profile.id] if @total_presences[profile.id] %></td>
         <td>
-          <%= profile.done ? link_to(icon('search'), profile_path(profile)) : link_to_edit(edit_profile_path(profile)) %>
+          <%= profile.done ? link_to(dmicon('search'), profile_path(profile)) : link_to_edit(edit_profile_path(profile)) %>
         </td> 
       </tr>
     <% end %>
