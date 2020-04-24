@@ -1,94 +1,88 @@
-# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
 #
-# Note that this schema.rb definition is the authoritative source for your
-# database schema. If you need to create the application database on another
-# system, you should be using db:schema:load, not running all the migrations
-# from scratch. The latter is a flawed and unsustainable approach (the more migrations
-# you'll amass, the slower it'll run and the greater likelihood for issues).
+# This file is the source Rails uses to define your schema when running `rails
+# db:schema:load`. When creating a new database, `rails db:schema:load` tends to
+# be faster and is potentially less error prone than running all of your
+# migrations from scratch. Old migrations may fail to apply correctly if those
+# migrations use external dependencies or application code.
 #
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema.define(version: 0) do
 
-  create_table "areas", force: :cascade do |t|
-    t.integer "organization_id", limit: 4
-    t.string  "name",            limit: 255
+  create_table "areas", id: :integer, unsigned: true, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.integer "organization_id", unsigned: true
+    t.string "name"
+    t.index ["organization_id"], name: "organization_id"
   end
 
-  add_index "areas", ["organization_id"], name: "organization_id", using: :btree
-
-  create_table "areas_profiles", id: false, force: :cascade do |t|
-    t.integer "area_id",    limit: 4, null: false
-    t.integer "profile_id", limit: 4, null: false
+  create_table "areas_profiles", id: false, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.integer "area_id", null: false, unsigned: true
+    t.integer "profile_id", null: false, unsigned: true
+    t.index ["area_id"], name: "area_id"
+    t.index ["profile_id"], name: "profile_id"
   end
 
-  add_index "areas_profiles", ["area_id"], name: "area_id", using: :btree
-  add_index "areas_profiles", ["profile_id"], name: "profile_id", using: :btree
-
-  create_table "areas_supervisors", id: false, force: :cascade do |t|
-    t.integer "area_id", limit: 4, null: false
-    t.integer "user_id", limit: 4, null: false
+  create_table "areas_supervisors", id: false, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.integer "area_id", null: false, unsigned: true
+    t.integer "user_id", null: false, unsigned: true
+    t.index ["area_id"], name: "area_id"
+    t.index ["user_id"], name: "user_id"
   end
 
-  add_index "areas_supervisors", ["area_id"], name: "area_id", using: :btree
-  add_index "areas_supervisors", ["user_id"], name: "user_id", using: :btree
-
-  create_table "organizations", force: :cascade do |t|
-    t.string "name",       limit: 255
-    t.text   "descrition", limit: 65535
+  create_table "organizations", id: :integer, unsigned: true, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "name"
+    t.text "descrition"
   end
 
-  create_table "organizations_secretaries", id: false, force: :cascade do |t|
-    t.integer "organization_id", limit: 4, null: false
-    t.integer "user_id",         limit: 4, null: false
+  create_table "permissions", id: :integer, unsigned: true, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.integer "user_id", null: false, unsigned: true
+    t.integer "organization_id", null: false, unsigned: true
+    t.integer "authlevel"
+    t.index ["organization_id"], name: "fk_organization_authorization"
+    t.index ["user_id"], name: "fk_user_authorization"
   end
 
-  add_index "organizations_secretaries", ["organization_id"], name: "organization_id", using: :btree
-  add_index "organizations_secretaries", ["user_id"], name: "user_id", using: :btree
-
-  create_table "profiles", force: :cascade do |t|
-    t.integer "organization_id", limit: 4
-    t.integer "student_id",      limit: 4
-    t.integer "round_id",        limit: 4
-    t.text    "general_notes",   limit: 65535
-    t.text    "area_notes",      limit: 65535
-    t.boolean "done",            limit: 1
-    t.boolean "punchable",       limit: 1
-    t.boolean "resign",          limit: 1
+  create_table "profiles", id: :integer, unsigned: true, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.integer "organization_id", unsigned: true
+    t.integer "student_id", unsigned: true
+    t.integer "round_id", unsigned: true
+    t.text "general_notes"
+    t.text "area_notes"
+    t.boolean "done"
+    t.boolean "punchable"
+    t.boolean "resign"
+    t.index ["organization_id"], name: "organization_id"
+    t.index ["round_id"], name: "round_id"
+    t.index ["student_id"], name: "student_id"
   end
 
-  add_index "profiles", ["organization_id"], name: "organization_id", using: :btree
-  add_index "profiles", ["round_id"], name: "round_id", using: :btree
-  add_index "profiles", ["student_id"], name: "student_id", using: :btree
-
-  create_table "punches", force: :cascade do |t|
-    t.integer  "profile_id",   limit: 4
+  create_table "punches", id: :integer, unsigned: true, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.integer "profile_id", unsigned: true
     t.datetime "arrival"
-    t.string   "arrival_ip",   limit: 20
+    t.string "arrival_ip", limit: 20
     t.datetime "departure"
-    t.string   "departure_ip", limit: 20
-    t.text     "note",         limit: 65535
+    t.string "departure_ip", limit: 20
+    t.text "note"
+    t.index ["profile_id"], name: "profile_id"
   end
 
-  add_index "punches", ["profile_id"], name: "profile_id", using: :btree
-
-  create_table "rounds", force: :cascade do |t|
-    t.date    "start_date"
-    t.date    "end_date"
-    t.boolean "active",     limit: 1
+  create_table "rounds", id: :integer, unsigned: true, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.date "start_date"
+    t.date "end_date"
+    t.boolean "active"
   end
 
-  create_table "users", force: :cascade do |t|
-    t.string "upn",            limit: 255
-    t.string "name",           limit: 255
-    t.string "surname",        limit: 255
-    t.string "email",          limit: 255
-    t.string "telephone",      limit: 100
-    t.date   "updated_at"
-    t.string "type",           limit: 7
+  create_table "users", id: :integer, unsigned: true, default: nil, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "upn"
+    t.string "name"
+    t.string "surname"
+    t.string "email"
+    t.string "telephone", limit: 100
+    t.date "updated_at"
+    t.column "type", "enum('Student')"
     t.string "employeeNumber", limit: 10
   end
 
@@ -96,8 +90,8 @@ ActiveRecord::Schema.define(version: 0) do
   add_foreign_key "areas_profiles", "profiles", name: "areas_profiles_ibfk_2"
   add_foreign_key "areas_supervisors", "areas", name: "areas_supervisors_ibfk_1"
   add_foreign_key "areas_supervisors", "users", name: "areas_supervisors_ibfk_2"
-  add_foreign_key "organizations_secretaries", "organizations", name: "organizations_secretaries_ibfk_1"
-  add_foreign_key "organizations_secretaries", "users", name: "organizations_secretaries_ibfk_2"
+  add_foreign_key "permissions", "organizations", name: "fk_organization_authorization"
+  add_foreign_key "permissions", "users", name: "fk_user_authorization"
   add_foreign_key "profiles", "rounds", name: "profiles_ibfk_2"
   add_foreign_key "profiles", "users", column: "student_id", name: "profiles_ibfk_1"
   add_foreign_key "punches", "profiles", name: "punches_ibfk_1"
