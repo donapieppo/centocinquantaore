@@ -1,9 +1,10 @@
 class Profile < ApplicationRecord
   belongs_to :organization # prima a organization anche se non associato a aree
+  has_and_belongs_to_many :areas, join_table: 'areas_profiles'
+
   belongs_to :student
   belongs_to :round
   has_many   :punches
-  has_and_belongs_to_many :areas, join_table: 'areas_profiles'
 
   # TODO Valeria
   # validate self.area.organization_id = self.organization_id

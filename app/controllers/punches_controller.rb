@@ -1,7 +1,12 @@
 class PunchesController < ApplicationController
-  before_action :user_student!, only: [:index, :in, :out]
-  before_action :get_profile_and_check_permission, only: [:new, :create]
-  before_action :get_punch_and_check_permission, except: [:index, :in, :out, :new, :create]
+  #
+  #
+  # before_action :user_student!, only: [:index, :in, :out]
+  #
+  #
+  #
+  before_action :get_profile, only: [:new, :create]
+  before_action :get_punch_and_check_permission, only: [:edit, :update, :edit_missing, :missing, :destroy]
 
   def index
     @profile = current_user.active_profile
@@ -10,14 +15,14 @@ class PunchesController < ApplicationController
   end
 
   def in
-    current_user.active_profile.done and raise "Non più attivo"
+    authorize :punch
     flash[:notice] = "NON HAI MARCATO USCITA PRECEDENTE." if current_user.present_now?
     current_user.enter_now(request.remote_ip)
     redirect_to punches_path, notice: "Hai marcato l'ingresso."
   end
 
   def out
-    current_user.active_profile.done and raise "Non più attivo"
+    authorize :punch
     flash[:notice] = "NON HAI MARCATO ENTRATA." unless current_user.present_now?
     current_user.depart_now(request.remote_ip)
     redirect_to punches_path, notice: "Hai marcato l'uscita."
@@ -26,6 +31,7 @@ class PunchesController < ApplicationController
   def new
     @punch = @profile.punches.build
     @punch.arrival = @punch.departure = Time.now.beginning_of_hour
+    authorize @punch
   end
 
   # "punch"=>{"arrival"=>"22/06/2015", "arrival_hour"=>"13", "arrival_minute"=>"54", "departure_hour"=>"13", "departure_minute"=>"54"}
@@ -84,14 +90,13 @@ class PunchesController < ApplicationController
 
   private 
 
-  def get_profile_and_check_permission
+  def get_profile
     @profile = Profile.find(params[:profile_id])
-    current_user.owns_profile?(@profile) or raise DmUniboCommon::NoAccess
   end
 
   def get_punch_and_check_permission
     @punch = Punch.includes(:profile).find(params[:id])
-    current_user.owns_profile?(@punch.profile) or raise DmUniboCommon::NoAccess
+    authorize @punch
   end
 
 end
