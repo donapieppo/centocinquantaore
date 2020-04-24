@@ -1,8 +1,3 @@
-class OrganizationsController < ApplicationController
-  before_action :user_admin!
-
-  def index
-    @organizations = Organization.includes(:secretaries, areas: [:supervisors])
-  end
+class OrganizationsController < DmUniboCommon::OrganizationsController
 end
 

@@ -71,7 +71,7 @@ class ProfilesController < ApplicationController
 
   def get_profile_and_check_permission
     @profile = Profile.find(params[:id])
-    current_user.owns_profile?(@profile) or raise DmUniboCommon::NoAccess
+    authorize(@profile)
   end
 
   # FIMXE move in models

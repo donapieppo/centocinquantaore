@@ -4,12 +4,16 @@ class ApplicationController < ActionController::Base
   include Pundit
 
   include DmUniboCommon::Controllers::Helpers
-  include UserPermissionHelper # current_organization
 
   impersonates :user
 
   before_action :log_current_user, :force_sso_user, :set_organization, :update_current_user_authlevels, :set_round
   after_action :verify_authorized, except: [:index, :who_impersonate, :impersonate, :shibboleth]
+
+  def default_url_options(_options={})
+    _options[:__org__] = current_organization ? current_organization.code : nil
+    _options
+  end
 
   # iniziamo con Round.get_active
   # quando cambia lo mettiamo in sessione

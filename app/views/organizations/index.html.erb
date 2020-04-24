@@ -8,7 +8,7 @@
         <%= link_to_delete organization_secretary_path(organization, secretary) %>
         </dd>
       <% end %>
-      <dd><%= link_to icon('user-plus') + ' nuovo segretario', new_organization_secretary_path(organization) %></dd>
+      <dd><%= link_to dmicon('user-plus') + ' nuovo segretario', new_organization_secretary_path(organization) %></dd>
 
       <dt>Aree:</dt>
       <% organization.areas.each do |area| %>  
@@ -23,13 +23,13 @@
           </em>
           </dd>
         <% end %>
-        <dd><%= link_to icon('user-plus') + ' nuovo supervisore', new_area_supervisor_path(area) %></dd>
+        <dd><%= link_to dmicon('user-plus') + ' nuovo supervisore', new_area_supervisor_path(area) %></dd>
       <% end %>
     </dl>
 
     <div class="row">
       <div class="col-md-9 offset-md-3">
-        <%= link_to icon('cube') + ' Nuova area', new_organization_area_path(organization), class: :button %>  
+        <%= link_to dmicon('cube') + ' Nuova area', new_organization_area_path(organization), class: :button %>  
       </div>
     </div>
   <% end %>
