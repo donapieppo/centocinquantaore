@@ -13,7 +13,7 @@
         <%= dl_field :telephone,      @profile.student.telephone %>  
       </dl>
       <hr/>
-      <% if current_user.owns_profile_as_secretary?(@profile) %>
+      <% if policy(@profile).update_all_fields? %>
         <%= profile.association :areas, collection: @profile.organization.areas, include_blank: false, as: :check_boxes %>  
         <%= profile.input :general_notes %>
         <%= profile.input :telephone %>  
@@ -24,11 +24,11 @@
     <% end %>
 
     <p class="info">
-      <%= current_user.owns_profile_as_secretary?(@profile) ? t(:area_notes) : t(:general_notes) %>: 
-      <%= current_user.owns_profile_as_secretary?(@profile) ? @profile.area_notes : @profile.general_notes %>
+      <%= policy(@profile).update_notes? ? t(:area_notes) : t(:general_notes) %>: 
+      <%= policy(@profile).update_notes? ? @profile.area_notes : @profile.general_notes %>
     </p>
 
-    <% if current_user.owns_profile_as_secretary?(@profile) %>
+    <% if policy(@profile).update_all_fields? %>
       <fieldset>
         <legend>Chiusure</legend>
         <% if @total_presence > 0 %>
