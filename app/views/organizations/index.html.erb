@@ -2,10 +2,10 @@
   <%= dm_card title: organization.to_s do  %>
     <dl class="dl-horizontal">
       <dt>Segretari:</dt>
-      <% organization.secretaries.each do |secretary| %>  
+      <% organization.permissions.each do |secretary| %>  
         <dd>
-        <%= secretary %>  
-        <%= link_to_delete organization_secretary_path(organization, secretary) %>
+          <%= secretary %>  
+          <%= link_to_delete organization_secretary_path(organization, secretary) %>
         </dd>
       <% end %>
       <dd><%= link_to dmicon('user-plus') + ' nuovo segretario', new_organization_secretary_path(organization) %></dd>
@@ -13,7 +13,7 @@
       <dt>Aree:</dt>
       <% organization.areas.each do |area| %>  
         <dd>
-        <strong><%= area %> (<%= c = area.active_profiles.count %>) <%= link_to_delete(area_path(area)) if c == 0 %></strong>
+          <strong><%= area %> (<%= c = area.active_profiles.count %>) <%= link_to_delete(area_path(area)) if c == 0 %></strong>
         </dd>
         <% area.supervisors.each do |supervisor| %>
           <dd>
@@ -23,7 +23,9 @@
           </em>
           </dd>
         <% end %>
-        <dd><%= link_to dmicon('user-plus') + ' nuovo supervisore', new_area_supervisor_path(area) %></dd>
+        <dd>
+         <%= link_to dmicon('user-plus') + ' nuovo supervisore', new_area_supervisor_path(area) %>
+        </dd>
       <% end %>
     </dl>
 
