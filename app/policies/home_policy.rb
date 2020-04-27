@@ -3,4 +3,8 @@ class HomePolicy < ApplicationPolicy
   def start?
     true
   end
+
+  def choose_organization?
+    true
+  end
 end
