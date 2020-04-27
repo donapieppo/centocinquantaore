@@ -8,7 +8,7 @@
           <% Round.order('start_date desc').each do |round| %>
             <%= link_to fwdmicon('calendar-alt') + " " + round.to_s, main_app.profiles_path(round_id: round) %>
           <% end %>
-          <% if policy(current_user.current_organization).edit? %>
+          <% if policy(current_organization).manage? %>
             <div class="dropdown-divider"></div>
             <%= link_to fwdmicon('pencil') + ' modifiche', main_app.rounds_path %>
           <% end %>
