@@ -4,10 +4,14 @@
   <h1>Scegli la tua struttura</h1>
 <% end %>
 
-<div class="row">
-  <% @organizations.each do |o| %>  
-    <div class="col-md-6">
-      <%= link_to o.name, o.code, class: 'btn btn-lg btn-primary w-100 h-100' %>
-    </div>
-  <% end %>
-</div>
+<% if @organizations.any? %>  
+  <div class="row">
+    <% @organizations.each do |o| %>  
+      <div class="col-md-6">
+        <%= link_to o.name, o.code, class: 'btn btn-lg btn-primary w-100 h-100' %>
+      </div>
+    <% end %>
+  </div>
+<% else %>
+  <h2>No accesso a nessuna struttura</h2>
+<% end %>

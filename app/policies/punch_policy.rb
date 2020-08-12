@@ -1,4 +1,8 @@
 class PunchPolicy < ApplicationPolicy
+  def index?
+    true
+  end
+
   def in?
     @user.student? && ! @user.active_profile.done 
   end

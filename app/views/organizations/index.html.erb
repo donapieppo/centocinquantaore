@@ -2,13 +2,13 @@
   <%= dm_card title: organization.to_s do  %>
     <dl class="dl-horizontal">
       <dt>Segretari:</dt>
-      <% organization.permissions.each do |secretary| %>  
+      <% organization.permissions.each do |permission| %>  
         <dd>
-          <%= secretary %>  
-          <%= link_to_delete organization_secretary_path(organization, secretary) %>
+          <%= permission.user %>  
+          <%= link_to_delete dm_unibo_common::permission_path(permission) %>
         </dd>
       <% end %>
-      <dd><%= link_to dmicon('user-plus') + ' nuovo segretario', new_organization_secretary_path(organization) %></dd>
+      <dd><%= link_to dmicon('user-plus') + ' nuovo segretario', dm_unibo_common::new_organization_permission_path(organization) %></dd>
 
       <dt>Aree:</dt>
       <% organization.areas.each do |area| %>  

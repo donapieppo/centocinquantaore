@@ -8,7 +8,7 @@ class HomeController < ApplicationController
         redirect_to organizations_path and return
       elsif current_organization && current_user.student?
         redirect_to punches_path and return
-      elsif current_organization 
+      elsif current_organization && policy(current_organization).list_profiles?
         redirect_to profiles_path and return
       else
         redirect_to choose_organization_path and return
@@ -20,8 +20,8 @@ class HomeController < ApplicationController
     authorize :home
     if current_user.student?
       @organizations = []
-    elsif current_user.has_some_authorization?
-      @organizations = current_user.authorization.organizations
+    elsif current_user_has_some_authorization?
+      @organizations = current_user_possible_organizations
     else
       @organizations = current_user.areas.map(&:organization)
     end

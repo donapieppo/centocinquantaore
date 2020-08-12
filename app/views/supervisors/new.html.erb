@@ -1,9 +1,11 @@
 <h1>Nuovo responsabile <br/><small>presso &ldquo;<%= @area %>&rdquo;</small></h1>
 
-<%= form_tag area_supervisors_path(@area) do %>  
-  <%= label_tag 'Indirizzo mail' %>  
-  <%= text_field_tag :upn %>  
-  <%= submit_tag 'Crea' %> - <%= link_to_back organizations_path %>  
+<%= dm_card title: "Nuovo responsabile" do %>  
+  <%= form_tag area_supervisors_path(@area) do %>  
+    <%= label_tag 'Indirizzo mail' %>  
+    <%= text_field_tag :upn %>  
+    <%= submit_tag 'Crea' %> - <%= link_to_back organizations_path %>  
+  <% end %>
 <% end %>
 
 

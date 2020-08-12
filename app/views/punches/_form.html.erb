@@ -1,9 +1,9 @@
 <%= dm_form_for [@profile, @punch], title: @punch.student do |punch| %>  
   <%= punch.dm_error_notification %>  
 
-  <%= punch.input :arrival,   as: :date_picker,     label: 'Giorno' %>  
-  <%= punch.input :arrival,   as: :hour_and_minute, label: 'Ora di arrivo' %>  
-  <%= punch.input :departure, as: :hour_and_minute, label: 'Ora di uscita' %>  
+  <%= punch.input :arrival,   as: :date_html5, label: 'Giorno' %>  
+  <%= punch.input :arrival,   as: :hour_and_minute,  label: 'Ora di arrivo' %>  
+  <%= punch.input :departure, as: :hour_and_minute,  label: 'Ora di uscita' %>  
 
   <%= punch.submit "Inserisci" %> - <%= link_to_back root_path %>  
 <% end %>

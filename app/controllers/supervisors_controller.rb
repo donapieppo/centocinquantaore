@@ -1,12 +1,10 @@
 class SupervisorsController < ApplicationController
-  before_action :get_area
+  before_action :get_area_and_authorize
 
   def new
-    authorize :supervisor
   end
 
   def create
-    authorize :supervisor
     begin
       user = User.syncronize(params[:upn])
       @area.supervisors << user
@@ -18,7 +16,6 @@ class SupervisorsController < ApplicationController
   end
 
   def destroy
-    authorize :supervisor
     supervisor = User.find(params[:id])
     @area.supervisors.delete(supervisor)
     redirect_to organizations_path
@@ -26,8 +23,9 @@ class SupervisorsController < ApplicationController
 
   private
 
-  def get_area
+  def get_area_and_authorize
     @area = Area.find(params[:area_id])
+    authorize :supervisor
   end
 end
 

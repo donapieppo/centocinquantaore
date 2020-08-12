@@ -1,10 +1,10 @@
 class AreaPolicy < ApplicationPolicy
   def create?
-    record_organization_manager?
+    @user.is_cesia?
   end
 
   def destroy?
-    record_organization_manager?
+    @user.is_cesia?
   end
 end
 

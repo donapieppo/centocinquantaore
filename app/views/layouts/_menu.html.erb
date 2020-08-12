@@ -3,7 +3,7 @@
 
   <% if current_user && current_organization %>
     <%= dm_nav do  %>  
-      <% if ! current_user.student? %>
+      <% if ! current_user.student? && policy(current_organization).list_profiles? %>
         <%= dropdown_menu :round, big_dmicon('bars') + @current_round.to_s do %>  
           <% Round.order('start_date desc').each do |round| %>
             <%= link_to fwdmicon('calendar-alt') + " " + round.to_s, main_app.profiles_path(round_id: round) %>

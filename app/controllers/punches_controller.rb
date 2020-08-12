@@ -12,6 +12,7 @@ class PunchesController < ApplicationController
     @profile = current_user.active_profile
     # puo' non avere un profilo in questo round
     @punches = @profile ? @profile.punches.order('arrival desc').load : []
+    authorize @punches
   end
 
   def in
@@ -40,6 +41,7 @@ class PunchesController < ApplicationController
     p = params[:punch]
     @punch.arrival   = p[:arrival] + " " + p[:arrival_hour]   + ":" + p[:arrival_minute]
     @punch.departure = p[:arrival] + " " + p[:departure_hour] + ":" + p[:departure_minute]
+    authorize @punch
     if @punch.save 
       redirect_to profiles_path, notice: "Inserite timbrature di #{@profile.student}."
     else
