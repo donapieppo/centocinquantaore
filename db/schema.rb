@@ -33,8 +33,9 @@ ActiveRecord::Schema.define(version: 0) do
   end
 
   create_table "organizations", id: :integer, unsigned: true, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "code"
     t.string "name"
-    t.text "descrition"
+    t.text "description"
   end
 
   create_table "permissions", id: :integer, unsigned: true, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
