@@ -15,11 +15,11 @@ class Punch < ApplicationRecord
 
   def check_not_in_future
     if self.arrival and self.arrival > Time.now
-      self.errors.add(:arrival, 'Non puoi segnare una presenza nel futuro')
+      self.errors.add(:base, 'Non puoi segnare un arrivo nel futuro')
       return false
     end
     if self.departure and self.departure > Time.now
-      self.errors.add(:departure, 'Non puoi segnare una presenza nel futuro')
+      self.errors.add(:base, 'Non puoi segnare una uscita nel futuro')
       return false
     end
   end
@@ -61,7 +61,7 @@ class Punch < ApplicationRecord
     day = self.day.strftime("%Y-%m-%d") 
     a = self.arrival   ? self.arrival.strftime("%H:%M")   : '??:??'
     d = self.departure ? self.departure.strftime("%H:%M") : '??:??'
-    "#{day} entrata: #{a} - uscita: #{d}"
+    "#{day} > entrata: #{a} - uscita: #{d}"
   end
 
   def day
