@@ -5,7 +5,6 @@ Rails.application.routes.draw do
 
   # for cesia
   resources :organizations do
-    resources :secretaries
     resources :areas
   end
 
