@@ -1,12 +1,12 @@
 class ProfilesController < ApplicationController
   before_action :get_profile_and_check_permission, only: [:show, :edit, :update, :set_area, :close, :resign] 
-  
+
   def index
     authorize current_organization, :list_profiles?
     @profiles = current_organization.profiles.includes(:student,:areas)
-                                    .where(round: @current_round)
-                                    .order('profiles.done asc, users.surname')
-                                    .references(:profiles, :users)
+      .where(round: @current_round)
+      .order('profiles.done asc, users.surname')
+      .references(:profiles, :users)
     if ! policy(current_organization).manage?
       @profiles = @profiles.where('profiles.id in (?)', current_user.profiles_as_supervisor_ids)
     end
@@ -14,12 +14,12 @@ class ProfilesController < ApplicationController
     @profiles = @profiles.where('profiles.id IN (?)', params[:ids]) if params[:ids]
 
     @missing_punches = Punch.missing.where('profile_id IN (?)', @profiles.ids)
-    
+
     @total_presences = Profile.total_presences
     @present_punches = Punch.includes(:profile).in_today
-                                               .where('departure IS NULL')
-                                               .where('profiles.organization_id = ?', current_organization)
-                                               .references(:profiles)
+      .where('departure IS NULL')
+      .where('profiles.organization_id = ?', current_organization)
+      .references(:profiles)
   end
 
   def show
@@ -54,7 +54,7 @@ class ProfilesController < ApplicationController
 
     if @profile.save
       flash[:notice] = policy(current_organization).manage? ? 
-                       "#{@profile.student} assegnato a #{@profile.areas_string}" : "Le note sono state aggiornate."
+        "#{@profile.student} assegnato a #{@profile.areas_string}" : "Le note sono state aggiornate."
     else
       raise @profile.errors.inspect
     end
@@ -68,7 +68,7 @@ class ProfilesController < ApplicationController
     @profile.save!
     redirect_to profiles_path
   end
-  
+
   def resign
     @profile.done = 1
     @profile.resign = 1
@@ -85,10 +85,11 @@ class ProfilesController < ApplicationController
 
   # FIMXE move in models
   def check_area_ids_organization!
-    current_user.admin? and return true
-    Area.where(id: params[:profile][:area_ids])
-        .select(:organization_id)
-        .pluck(:organization_id).uniq == [@current_organization.id] or raise "NO CORRECT ORGANIZATION"
+    # params[:profile][:area_ids] can be [""] with hidden default 
+    if params[:profile][:area_ids] != [""]
+      Area.where(id: params[:profile][:area_ids])
+          .pluck(:organization_id).uniq == [current_organization.id] or raise "NO CORRECT ORGANIZATION"
+    end
   end
 
 end
