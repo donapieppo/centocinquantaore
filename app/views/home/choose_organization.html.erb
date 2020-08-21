@@ -1,10 +1,10 @@
-<% if current_user.student? %>  
-  <h1>Specifica la tua struttura</h1>
-<% else %>
-  <h1>Scegli la tua struttura</h1>
-<% end %>
-
 <% if @organizations.any? %>  
+  <% if current_user.student? %>  
+    <h1>Specifica la tua struttura</h1>
+  <% else %>
+    <h1>Scegli la tua struttura</h1>
+  <% end %>
+
   <div class="row">
     <% @organizations.each do |o| %>  
       <div class="col-md-6">
@@ -13,5 +13,6 @@
     <% end %>
   </div>
 <% else %>
-  <h2>No accesso a nessuna struttura</h2>
+  <h2 class="text-center p-5 m-5 alert alert-danger">No avete accesso a nessuna struttura.</h2>
+  <p>Si prega di contattare <%= support_mail %></p>
 <% end %>
