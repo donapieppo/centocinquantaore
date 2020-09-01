@@ -12,7 +12,7 @@ class PunchesController < ApplicationController
     @profile = current_user.active_profile
     # puo' non avere un profilo in questo round
     @punches = @profile ? @profile.punches.order('arrival desc').load : []
-    authorize @punches
+    authorize :punch
   end
 
   def in
