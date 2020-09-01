@@ -1,24 +1,40 @@
-<h1><%= @profile.student %> <small>(<%= @profile.student.employeeNumber %>) - <%= @current_round %></small></h1>
+<h1><%= @profile.student %></h1>
 
-<strong><%= @profile.areas_string %></strong>: <%= l(@profile.startdate, :format => :as_date) if @profile.startdate %> - <%= l(@profile.enddate, :format => :as_date) if @profile.enddate%> 
-
-<h4>Elenco timbrature <small>(totale <%= @profile.total_presence %> ore approssimate alla mezz'ora)</small></h4>
-<ul class="list-group">
-  <% @punches.each do |punch| %>
-    <li class="list-group-item py-1"><%= punch %></li>
+<dl class="dl-horizontal">
+  <%= dl_field :name,           @profile.student.name %>  
+  <%= dl_field :surname,        @profile.student.surname %>  
+  <%= dl_field :employeeNumber, @profile.student.employeeNumber %>
+  <%= dl_field :area,           @profile.areas_string %>
+  <dt>Mail</dt>
+  <dd><%= mail_to @profile.student.email %></dd>
+  <%= dl_field :telephone,      @profile.student.telephone %>  
+  <dt>Periodo servizio</dt>
+  <dd><%= @current_round %></dd>
+  <dt>Area</dt>
+  <dd><%= @profile.areas_string %></dd>
+  <dt>Inizio servizio</dt>
+  <dd><%= l(@profile.startdate, format: :as_date) if @profile.startdate %></dd>
+  <% if @profile.enddate %>  
+    <dt>Fine servizio</dt>
+    <dd><%= l(@profile.enddate, format: :as_date) %></dd>
   <% end %>
-</ul>
+  <dt>Timbrature</dt>
+  <dd>totale <%= @profile.total_presence %> ore approssimate alla mezz'ora</dd>
+  <% @punches.each do |punch| %>
+    <dd><%= punch %></dd>
+  <% end %>
+</dl>
 
 <p class="info">
-  <%= t(:general_notes) %>:
-  <br/>
-  <%= @profile.general_notes %>
+<%= t(:general_notes) %>:
+<br/>
+<%= @profile.general_notes %>
 </p>
 
 <p class="info">
-  <%= t(:area_notes) %>:
-  <br/>
-  <%= @profile.area_notes %>
+<%= t(:area_notes) %>:
+<br/>
+<%= @profile.area_notes %>
 </p>
 
 <% if ! @profile.done %>  
