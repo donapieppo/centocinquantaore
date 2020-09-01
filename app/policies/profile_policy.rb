@@ -8,7 +8,7 @@ class ProfilePolicy < ApplicationPolicy
   end
 
   def update?
-    record_organization_manager? || update_notes?
+    update_notes?
   end
 
   def update_all_fields?
@@ -18,6 +18,14 @@ class ProfilePolicy < ApplicationPolicy
   # secretary in at last one area of the profile
   def update_notes?
     record_organization_manager? || (@user.area_ids & @record.area_ids).any?
+  end
+
+  def close?
+    update?
+  end
+
+  def resign?
+    close?
   end
 end
 
