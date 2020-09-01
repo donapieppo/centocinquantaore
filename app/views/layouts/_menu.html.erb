@@ -1,20 +1,20 @@
 <%= dm_menu do %>  
   <%= dm_header %>
 
-  <% if current_user && current_organization %>
+  <% if current_user %>
     <%= dm_nav do  %>  
-      <% if ! current_user.student? && policy(current_organization).list_profiles? %>
-        <%= dropdown_menu :round, big_dmicon('bars') + @current_round.to_s do %>  
-          <% Round.order('start_date desc').each do |round| %>
-            <%= link_to fwdmicon('calendar-alt') + " " + round.to_s, main_app.profiles_path(round_id: round) %>
+      <% if current_organization %>  
+        <% if ! current_user.student? && policy(current_organization).list_profiles? %>
+          <%= dropdown_menu :round, big_dmicon('bars') + @current_round.to_s do %>  
+            <% Round.order('start_date desc').each do |round| %>
+              <%= link_to fwdmicon('calendar-alt') + " " + round.to_s, main_app.profiles_path(round_id: round) %>
+            <% end %>
+            <% if policy(current_organization).manage? %>
+              <div class="dropdown-divider"></div>
+              <%= link_to fwdmicon('pencil') + ' modifiche', main_app.rounds_path %>
+              <%# <%= link_to fwdmicon('user') + ' aggiungi studente', new_student_path %1> %>
+            <% end %>
           <% end %>
-          <% if policy(current_organization).manage? %>
-            <div class="dropdown-divider"></div>
-            <%= link_to fwdmicon('pencil') + ' modifiche', main_app.rounds_path %>
-          <% end %>
-          <%# <% if current_user.admin? %1> %>
-            <%#  <li><%= link_to fwdmicon('user') + ' aggiungi studente', new_student_path %1></li> %>
-            <%# <% end %1> %>
         <% end %>
       <% end %>
       <% if current_user.is_cesia? %>
