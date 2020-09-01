@@ -32,7 +32,7 @@ class Student < User
     punch.save!
   end
 
-  def get_current_organization
+  def get_active_profile_organization
     self.active_profile.organization if self.active_profile
   end
 end

@@ -12,10 +12,9 @@ class User < ApplicationRecord
     self.is_a? Student
   end
 
-  # per ora una sola per utente non studente
-  def get_current_organization
-    self.organizations.first || self.areas.first.try(:organization)
-  end
+  #def get_current_organization
+  #  self.organizations.first || self.areas.first.try(:organization)
+  #end
 
   def profiles_as_supervisor_ids
     self.areas.map(&:profiles).flatten.uniq.map(&:id)
