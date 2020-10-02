@@ -13,7 +13,7 @@
   <% end %>
 
   <%= dm_card title: 'Elenco Timbrature' do  %>  
-    <div class="btn btn-outline-success mb-2">Totale ore svolte: <strong><%= @profile.total_presence %></strong>.</div>
+    <div class="border border-info p-2 mb-3">Totale ore svolte: <strong><%= @profile.total_presence %></strong>.</div>
 
     <ul class="punches">
       <% @punches.each do |punch| %>
