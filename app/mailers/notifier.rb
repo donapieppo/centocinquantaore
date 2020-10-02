@@ -24,7 +24,7 @@ class Notifier < ActionMailer::Base
   # per assicurazione
   def report_first_punch(punch)
     @profile = punch.profile
-    to = @profile.organization.administrators.map(&:upn).sort.uniq
+    to = @profile.organization.permissions.includes(:user).map{|p| p.user.upn}.sort.uniq
 
     mail(to:      to,
          subject: "[150 ore] #{@profile.student} ai blocchi di partenza")
