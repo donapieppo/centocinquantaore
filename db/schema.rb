@@ -42,8 +42,8 @@ ActiveRecord::Schema.define(version: 0) do
     t.integer "user_id", null: false, unsigned: true
     t.integer "organization_id", null: false, unsigned: true
     t.integer "authlevel"
-    t.index ["organization_id"], name: "fk_organization_authorization"
-    t.index ["user_id"], name: "fk_user_authorization"
+    t.index ["organization_id"], name: "fk_organization_permission"
+    t.index ["user_id"], name: "fk_user_permission"
   end
 
   create_table "profiles", id: :integer, unsigned: true, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -91,8 +91,8 @@ ActiveRecord::Schema.define(version: 0) do
   add_foreign_key "areas_profiles", "profiles", name: "areas_profiles_ibfk_2"
   add_foreign_key "areas_supervisors", "areas", name: "areas_supervisors_ibfk_1"
   add_foreign_key "areas_supervisors", "users", name: "areas_supervisors_ibfk_2"
-  add_foreign_key "permissions", "organizations", name: "fk_organization_authorization"
-  add_foreign_key "permissions", "users", name: "fk_user_authorization"
+  add_foreign_key "permissions", "organizations", name: "fk_organization_permission"
+  add_foreign_key "permissions", "users", name: "fk_user_permission"
   add_foreign_key "profiles", "rounds", name: "profiles_ibfk_2"
   add_foreign_key "profiles", "users", column: "student_id", name: "profiles_ibfk_1"
   add_foreign_key "punches", "profiles", name: "punches_ibfk_1"
