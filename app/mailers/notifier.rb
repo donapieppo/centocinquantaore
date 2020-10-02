@@ -14,7 +14,7 @@ class Notifier < ActionMailer::Base
     @total_hours = total_hours
     # elenco dei supervisors che hanno potere sul centoorista
     to = @profile.areas.map(&:supervisors).flatten.map(&:upn).sort.uniq
-    cc = @profile.organization.secretaries.map(&:upn).sort.uniq
+    cc = @profile.organization.secretaries.map{|u| u.upn}.sort.uniq
 
     mail(to:      to,
          cc:      cc,
@@ -24,7 +24,7 @@ class Notifier < ActionMailer::Base
   # per assicurazione
   def report_first_punch(punch)
     @profile = punch.profile
-    to = @profile.organization.permissions.includes(:user).map{|p| p.user.upn}.sort.uniq
+    to = @profile.organization.secretaries.map{|u| u.upn}.sort.uniq
 
     mail(to:      to,
          subject: "[150 ore] #{@profile.student} ai blocchi di partenza")
