@@ -53,14 +53,12 @@ class ProfilesController < ApplicationController
     end
 
     if @profile.save
-      flash[:notice] = policy(current_organization).manage? ? 
-        "#{@profile.student} assegnato a #{@profile.areas_string}" : "Le note sono state aggiornate."
+      flash[:notice] = "Il profilo è stato aggiornato correttamente."
     else
       raise @profile.errors.inspect
     end
     redirect_to edit_profile_path(@profile)
   end
-
 
   # FIXME solo se ha qualche ora fatta
   def close
