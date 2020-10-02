@@ -9,4 +9,4 @@ environment.plugins.append('Provide', new webpack.ProvidePlugin({
 
 module.exports = environment
 
-// environment.config.output.publicPath = "/almaassets/packs/";
+environment.config.output.publicPath = "/centocinquantaore/packs/";
