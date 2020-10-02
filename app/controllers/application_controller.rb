@@ -13,7 +13,11 @@ class ApplicationController < DmUniboCommon::ApplicationController
         @current_round = Round.find(session[:round_id])
       else
         @current_round = Round.get_default
-        session[:round_id] = @current_round.id
+        if @current_round
+          session[:round_id] = @current_round.id
+        else
+          redirect_to main_app::no_rounds_path
+        end
       end
     end
   end

@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   mount DmUniboCommon::Engine => "/dm_unibo_common"
 
   get '/choose_organization', to: "home#choose_organization"
+  get '/no_rounds',           to: "home#no_rounds", as: 'no_rounds'
 
   # for cesia
   resources :organizations do

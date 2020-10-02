@@ -19,12 +19,16 @@ class HomeController < ApplicationController
   def choose_organization
     authorize :home
     if current_user.student?
-      @organizations = []
+      @organizations = [current_user.get_active_profile_organization]
     elsif current_user_has_some_authorization?
       @organizations = current_user_possible_organizations
     else
       @organizations = current_user.areas.map(&:organization)
     end
+  end
+
+  def no_rounds
+    authorize :home
   end
 end
 
