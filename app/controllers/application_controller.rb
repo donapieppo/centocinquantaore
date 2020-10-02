@@ -1,6 +1,12 @@
 class ApplicationController < DmUniboCommon::ApplicationController
-  before_action :set_current_user, :update_authorization, :set_current_organization, :log_current_user, :set_round, :force_sso_user
+  before_action :set_current_user, :update_authorization, :set_current_organization, :set_student_organization, :log_current_user, :set_round, :force_sso_user
   after_action :verify_authorized, except: [:index, :who_impersonate, :impersonate, :shibboleth]
+
+  def set_student_organization
+    if current_user && current_user.student?
+      @_current_organization = current_user.get_active_profile_organization
+    end
+  end
 
   # iniziamo con Round.get_default
   # quando cambia lo mettiamo in sessione
