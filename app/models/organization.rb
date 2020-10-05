@@ -7,7 +7,7 @@ class Organization < ApplicationRecord
   default_scope { order('organizations.name') }
 
   def secretaries
-    self.users_with_permission_level(2)
+    self.users_with_permission_level(DmUniboCommon::Authorization::TO_MANAGE)
   end
 end
 
