@@ -1,18 +1,18 @@
 class RoundPolicy < ApplicationPolicy
   def index?
-    record_organization_manager?
+    @user.is_cesia?
   end
 
   def create?
-    record_organization_manager?
+    @user.is_cesia?
   end
 
   def update?
-    record_organization_manager?
+    @user.is_cesia?
   end
 
   def destroy?
-    update?
+    @user.is_cesia?
   end
 end
 
