@@ -4,10 +4,12 @@
   <% @rounds.each do |round| %>
     <dt><%= round %></dt> 
     <dd>(<%= l round.start_date %> - <%= l round.end_date %>)
-    <%= link_to dmicon('search'), profiles_path(:round_id => round) %> 
+    <%= link_to dmicon('search'), profiles_path(round_id: round) %> 
     <%= link_to_edit edit_round_path(round) %>
     </dd>
   <% end %>
 </dl>
 
-<%= link_to 'Nuovo', new_round_path, :class => :button %>
+<% if policy(current_organization).manage? %>
+  <%= link_to 'Nuovo', new_round_path, class: 'btn btn-primary' %>
+<% end %>
