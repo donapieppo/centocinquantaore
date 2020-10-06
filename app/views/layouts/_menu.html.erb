@@ -9,11 +9,12 @@
             <% Round.order('start_date desc').each do |round| %>
               <%= link_to fwdmicon('calendar-alt') + " " + round.to_s, main_app.profiles_path(round_id: round) %>
             <% end %>
-            <% if policy(current_organization).manage? %>
-              <div class="dropdown-divider"></div>
-              <%= link_to fwdmicon('pencil') + ' modifiche', main_app.rounds_path %>
-              <%# <%= link_to fwdmicon('user') + ' aggiungi studente', new_student_path %1> %>
-            <% end %>
+          <% end %>
+          <% if current_user.is_cesia? %>  
+            <li><%= link_to fwdmicon('pencil-alt') + ' modifiche', main_app.rounds_path %></li>
+          <% end %>
+          <% if policy(current_organization).manage? %>
+            <li><%= link_to fwdmicon('user') + ' aggiungi studente', new_profile_path %></li>
           <% end %>
         <% end %>
       <% end %>
