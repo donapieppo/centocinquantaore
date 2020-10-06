@@ -19,6 +19,14 @@ class PunchPolicy < ApplicationPolicy
     ProfilePolicy.new(@user, @record.profile).update?
   end
 
+  def edit_missing?
+    missing?
+  end
+
+  def missing?
+    ProfilePolicy.new(@user, @record.profile).update?
+  end
+
   def destroy?
     update?
   end
