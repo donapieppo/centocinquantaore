@@ -72,7 +72,7 @@ class PunchesController < ApplicationController
 
   def missing
     @punch.arrival and @punch.departure and raise "Nulla da inserire"
-    datetime = @punch.day.change(:hour => params[:hour].to_i, :min => params[:min].to_i)
+    datetime = @punch.day.change(hour: params[:hour].to_i, min: params[:min].to_i)
     if @punch.arrival
       @punch.departure = datetime
     else
