@@ -28,11 +28,22 @@ class ProfilesController < ApplicationController
 
   # FIXME
   def new
+    @profile = current_organization.profiles.new
+    authorize @profile
   end
 
   # FIXME
   def create
-    @profiles = Profile.add_by_employee_ids(params[:mat].split(), params[:organization_id], params[:round_id])
+    authorize current_organization, :manage?
+
+    Rails.logger.info("Searching upn -#{params[:upn]}-")
+    begin
+      user = Student.syncronize(params[:upn])
+      @profile = user.profiles.create!(organization_id: current_organization.id, 
+                                       round_id: params[:round_id])
+    rescue DmUniboCommon::NoUser => e
+      redirect_to new_profile_path, alert: e
+    end
   end
 
   def edit
