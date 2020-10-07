@@ -5,7 +5,7 @@ class HomeController < ApplicationController
     authorize :home
     if user_signed_in?
       if current_user.is_cesia?
-        redirect_to organizations_path and return
+        redirect_to rounds_path and return
       elsif current_organization && current_user.student?
         redirect_to punches_path and return
       elsif current_organization && policy(current_organization).list_profiles?
