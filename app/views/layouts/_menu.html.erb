@@ -10,16 +10,12 @@
               <%= link_to fwdmicon('calendar-alt') + " " + round.to_s, main_app.profiles_path(round_id: round) %>
             <% end %>
           <% end %>
-          <% if current_user.is_cesia? %>  
-            <li><%= link_to fwdmicon('pencil-alt') + ' modifiche', main_app.rounds_path %></li>
-          <% end %>
-          <% if policy(current_organization).manage? %>
-            <li><%= link_to fwdmicon('user') + ' aggiungi studente', new_profile_path %></li>
-          <% end %>
         <% end %>
       <% end %>
       <% if current_user.is_cesia? %>
-        <li><%= link_to big_dmicon('building') + ' organizzazioni', main_app.organizations_path %></li>
+        <li><%= link_to fwdmicon('pencil-alt') + ' modifiche', main_app.rounds_path %></li>
+        <li><%= link_to fwdmicon('user') + ' aggiungi studente', new_profile_path %></li>
+        <li><%= link_to fwdmicon('building') + ' organizzazioni', main_app.organizations_path %></li>
       <% end %>
     <% end %>
   <% end %>
