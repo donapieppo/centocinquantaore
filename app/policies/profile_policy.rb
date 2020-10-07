@@ -4,7 +4,7 @@ class ProfilePolicy < ApplicationPolicy
   end
 
   def create?
-    record_organization_manager?
+    @user && @user.is_cesia?
   end
 
   def update?
