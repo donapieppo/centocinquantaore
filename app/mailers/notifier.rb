@@ -1,6 +1,4 @@
 class Notifier < ActionMailer::Base
-  default from: 'Centocinquantaore <dipmat-supportoweb@unibo.it>'
-
   def report_missing_punches(area)
     @area = area
     to = @area.supervisors.map(&:upn)
