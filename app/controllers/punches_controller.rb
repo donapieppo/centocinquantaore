@@ -66,6 +66,7 @@ class PunchesController < ApplicationController
     end
   end
 
+  # as edit and update but simpler for administrator
   def edit_missing
     @punch.arrival and @punch.departure and raise "Nulla da inserire"
   end
