@@ -1,10 +1,13 @@
 <%= form_tag profiles_path do %>    
   <p>
-    <label class="font-weight-bold">Sessione: </label>
+    <%= collection_select(nil, :organization_id, Organization.all, :id, :name) %>
+  </p>
+  <p>
     <%= collection_select(nil, :round_id, Round.order('start_date desc').limit(3), :id, :to_s) %>
   </p>
   <p>
-  <label class="font-weight-bold">Indirizzo mail @studio.unibo.it dello studente: </label>
-  <%= text_field_tag :upn %></p>
+    <label><b>Elenco di matricole separate da spazi</b>:</label> <br/>
+    <%= text_field_tag :mat %>
+  </p>
   <p><%= submit_tag %></p>
 <% end %>
