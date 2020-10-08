@@ -1,4 +1,4 @@
-class Notifier < ActionMailer::Base
+class Notifier < ApplicationMailer
   def report_missing_punches(area)
     @area = area
     to = @area.supervisors.map(&:upn)
