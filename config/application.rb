@@ -21,8 +21,11 @@ Bundler.require(*Rails.groups)
 
 module Centocinquantaore
   class Application < Rails::Application
+    config.hosts << "tester.dm.unibo.it"
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 6.0
+
+    config.authlevels = {read: 1, manage: 2}
 
     config.time_zone = 'Rome'
     config.i18n.default_locale = :it
