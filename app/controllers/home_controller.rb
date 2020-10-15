@@ -21,7 +21,8 @@ class HomeController < ApplicationController
     if current_user.student?
       @organizations = [current_user.get_active_profile_organization]
     elsif current_user_has_some_authorization?
-      @organizations = current_user_possible_organizations
+      # @organizations = current_user_possible_organizations
+      @organizations = (current_user.my_organizations + current_user.areas.map(&:organization)).uniq
     else
       @organizations = current_user.areas.map(&:organization)
     end
