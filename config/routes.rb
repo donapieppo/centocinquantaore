@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   mount DmUniboCommon::Engine => "/dm_unibo_common"
 
+  get '/logins/logout',       to: 'dm_unibo_common/logins#logout'
   get '/choose_organization', to: "home#choose_organization"
   get '/no_rounds',           to: "home#no_rounds", as: 'no_rounds'
 
@@ -22,7 +23,7 @@ Rails.application.routes.draw do
     get '/punches/out', to: redirect('punches')
     get '/punches/in',  to: redirect('punches')
     resources :punches do
-      # studneti entrano e escono
+      # studenti entrano e escono
       post 'in',  on: :collection
       post 'out', on: :collection
       # admins inseriscono mancanti
@@ -38,5 +39,4 @@ Rails.application.routes.draw do
   end
 
   root to: 'home#start'
-
 end
