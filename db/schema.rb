@@ -2,8 +2,8 @@
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
 #
-# This file is the source Rails uses to define your schema when running `rails
-# db:schema:load`. When creating a new database, `rails db:schema:load` tends to
+# This file is the source Rails uses to define your schema when running `bin/rails
+# db:schema:load`. When creating a new database, `bin/rails db:schema:load` tends to
 # be faster and is potentially less error prone than running all of your
 # migrations from scratch. Old migrations may fail to apply correctly if those
 # migrations use external dependencies or application code.
@@ -12,41 +12,42 @@
 
 ActiveRecord::Schema.define(version: 0) do
 
-  create_table "areas", id: :integer, unsigned: true, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "areas", id: { type: :integer, unsigned: true }, charset: "utf8", force: :cascade do |t|
     t.integer "organization_id", unsigned: true
     t.string "name"
     t.index ["organization_id"], name: "organization_id"
   end
 
-  create_table "areas_profiles", id: false, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "areas_profiles", id: false, charset: "utf8", force: :cascade do |t|
     t.integer "area_id", null: false, unsigned: true
     t.integer "profile_id", null: false, unsigned: true
     t.index ["area_id"], name: "area_id"
     t.index ["profile_id"], name: "profile_id"
   end
 
-  create_table "areas_supervisors", id: false, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "areas_supervisors", id: false, charset: "utf8", force: :cascade do |t|
     t.integer "area_id", null: false, unsigned: true
     t.integer "user_id", null: false, unsigned: true
     t.index ["area_id"], name: "area_id"
     t.index ["user_id"], name: "user_id"
   end
 
-  create_table "organizations", id: :integer, unsigned: true, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "organizations", id: { type: :integer, unsigned: true }, charset: "utf8", force: :cascade do |t|
     t.string "code"
     t.string "name"
     t.text "description"
   end
 
-  create_table "permissions", id: :integer, unsigned: true, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+  create_table "permissions", id: { type: :integer, unsigned: true }, charset: "utf8mb4", force: :cascade do |t|
     t.integer "user_id", null: false, unsigned: true
     t.integer "organization_id", null: false, unsigned: true
+    t.string "network", limit: 20
     t.integer "authlevel"
     t.index ["organization_id"], name: "fk_organization_permission"
     t.index ["user_id"], name: "fk_user_permission"
   end
 
-  create_table "profiles", id: :integer, unsigned: true, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "profiles", id: { type: :integer, unsigned: true }, charset: "utf8", force: :cascade do |t|
     t.integer "organization_id", unsigned: true
     t.integer "student_id", unsigned: true
     t.integer "round_id", unsigned: true
@@ -60,7 +61,7 @@ ActiveRecord::Schema.define(version: 0) do
     t.index ["student_id"], name: "student_id"
   end
 
-  create_table "punches", id: :integer, unsigned: true, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "punches", id: { type: :integer, unsigned: true }, charset: "utf8", force: :cascade do |t|
     t.integer "profile_id", unsigned: true
     t.datetime "arrival"
     t.string "arrival_ip", limit: 20
@@ -70,13 +71,13 @@ ActiveRecord::Schema.define(version: 0) do
     t.index ["profile_id"], name: "profile_id"
   end
 
-  create_table "rounds", id: :integer, unsigned: true, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "rounds", id: { type: :integer, unsigned: true }, charset: "utf8", force: :cascade do |t|
     t.date "start_date"
     t.date "end_date"
     t.boolean "active"
   end
 
-  create_table "users", id: :integer, unsigned: true, default: nil, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "users", id: { type: :integer, unsigned: true, default: nil }, charset: "utf8", force: :cascade do |t|
     t.string "upn"
     t.string "name"
     t.string "surname"
