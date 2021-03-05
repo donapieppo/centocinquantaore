@@ -22,8 +22,10 @@ class ProfilesController < ApplicationController
       .references(:profiles)
   end
 
+  # Known-safe values can be passed to query methods by wrapping them in Arel.sql
+  # https://api.rubyonrails.org/classes/ActiveRecord/UnknownAttributeReference.html
   def show
-    @punches = @profile.punches.order("COALESCE(punches.arrival, punches.departure) desc")
+    @punches = @profile.punches.order(Arel.sql("COALESCE(punches.arrival, punches.departure) desc"))
   end
 
   # FIXME
