@@ -24,7 +24,7 @@ class RoundsController < ApplicationController
   end
 
   def update
-    if @round.update_attributes(round_params)
+    if @round.update(round_params)
       redirect_to rounds_path
     end
   end
