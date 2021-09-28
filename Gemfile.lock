@@ -160,7 +160,7 @@ GEM
     multipart-post (2.1.1)
     mysql2 (0.5.3)
     nio4r (2.5.8)
-    nokogiri (1.12.4-x86_64-linux)
+    nokogiri (1.12.5-x86_64-linux)
       racc (~> 1.4)
     nori (2.6.0)
     oauth2 (1.4.7)
