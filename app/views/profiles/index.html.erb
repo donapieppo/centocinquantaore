@@ -30,14 +30,14 @@
 </div>
 
 <h2>Prospetto ore svolte (<%= @current_round %>)</h2>
-<table class="tablesorter table-sm table-hover">
+<table id="sortable-table" class="tablesorter table-sm table-hover">
   <thead>
   <tr>
-    <th>Nome</th>
+    <th onclick="sortTable(0)">Nome</th>
     <th>Email</th>
-    <th>Inizio</th>
-    <th>Area</th>
-    <th>Ore svolte</th>
+    <th onclick="sortTable(2)">Inizio</th>
+    <th onclick="sortTable(3)">Area</th>
+    <th onclick="sortTable(4)">Ore svolte</th>
     <th></th>
   </tr>
   </thead>
@@ -69,3 +69,7 @@
     <% end %>
   </tbody>
 </table>
+
+<%= javascript_tag do %>  
+  <%= render partial: 'sort_table.js' %>  
+<% end %>
