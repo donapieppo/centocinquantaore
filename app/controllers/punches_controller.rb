@@ -46,7 +46,7 @@ class PunchesController < ApplicationController
       redirect_to profiles_path, notice: "Inserite timbrature di #{@profile.student}."
     else
       # @punch.errors[:base] << @punch.errors[:arrival] + @punch.errors[:departure]
-      render action: 'new'
+      render action: 'new', status: :unprocessable_entity
     end
   end
 
@@ -82,7 +82,7 @@ class PunchesController < ApplicationController
     if @punch.save
       redirect_to profiles_path, notice: "La marcatura è stata inserita."
     else
-      render action: 'edit_missing'
+      render action: 'edit_missing', status: :unprocessable_entity
     end
   end
   
