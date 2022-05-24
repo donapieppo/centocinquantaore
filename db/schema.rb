@@ -10,8 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 0) do
-
+ActiveRecord::Schema[7.0].define(version: 0) do
   create_table "areas", id: { type: :integer, unsigned: true }, charset: "utf8", force: :cascade do |t|
     t.integer "organization_id", unsigned: true
     t.string "name"
@@ -63,9 +62,9 @@ ActiveRecord::Schema.define(version: 0) do
 
   create_table "punches", id: { type: :integer, unsigned: true }, charset: "utf8", force: :cascade do |t|
     t.integer "profile_id", unsigned: true
-    t.datetime "arrival"
+    t.datetime "arrival", precision: nil
     t.string "arrival_ip", limit: 20
-    t.datetime "departure"
+    t.datetime "departure", precision: nil
     t.string "departure_ip", limit: 20
     t.text "note"
     t.index ["profile_id"], name: "profile_id"
