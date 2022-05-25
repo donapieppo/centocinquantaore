@@ -1,7 +1,7 @@
 <%= dm_menu do %>  
   <%= dm_header %>
-  <% if current_user %>
-    <%= dm_nav do  %>  
+  <%= dm_nav do  %>  
+    <% if current_user %>
       <% if current_organization %>  
         <% if ! current_user.student? && policy(current_organization).list_profiles? %>
           <%= dropdown_menu :round, fwdmicon('bars') + @current_round.to_s do %>  
