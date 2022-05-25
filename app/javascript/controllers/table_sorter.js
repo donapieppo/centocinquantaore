@@ -14,11 +14,11 @@ export default class extends Controller {
     )(getCellValue(asc ? a : b, idx), getCellValue(asc ? b : a, idx));
 
     const table = this.element;
+    const tbody = this.element.querySelector('tbody');
     table.querySelectorAll('th').forEach(th => th.addEventListener('click', (() => {
-      const thead = this.element.querySelector('tbody');
-      Array.from(table.querySelectorAll('tr:nth-child(n+2)'))
+      Array.from(tbody.querySelectorAll('tr'))
            .sort(comparer(Array.from(th.parentNode.children).indexOf(th), this.asc = !this.asc))
-           .forEach(tr =>thead.appendChild(tr) );
+           .forEach(tr =>tbody.appendChild(tr) );
     })));
   }
 }
