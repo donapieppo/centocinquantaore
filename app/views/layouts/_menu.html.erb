@@ -1,13 +1,12 @@
 <%= dm_menu do %>  
   <%= dm_header %>
-
   <% if current_user %>
     <%= dm_nav do  %>  
       <% if current_organization %>  
         <% if ! current_user.student? && policy(current_organization).list_profiles? %>
           <%= dropdown_menu :round, fwdmicon('bars') + @current_round.to_s do %>  
             <% Round.order('start_date desc').each do |round| %>
-              <%= link_to fwdmicon('calendar-alt') + " " + round.to_s, main_app.profiles_path(round_id: round) %>
+              <li><%= link_to fwdmicon('calendar-alt') + " " + round.to_s, main_app.profiles_path(round_id: round) %></li>
             <% end %>
           <% end %>
         <% end %>
