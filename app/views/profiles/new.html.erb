@@ -1,9 +1,9 @@
 <%= form_tag profiles_path do %>    
   <p>
-    <%= collection_select(nil, :organization_id, Organization.all, :id, :name) %>
+  <%= collection_select nil, :organization_id, Organization.all, :id, :name, class: "form-select" %>
   </p>
   <p>
-    <%= collection_select(nil, :round_id, Round.order('start_date desc').limit(3), :id, :to_s) %>
+    <%= collection_select nil, :round_id, Round.order('start_date desc').limit(3), :id, :to_s, class: "form-select" %>
   </p>
   <p>
     <label><b>Elenco di matricole separate da spazi</b>:</label> <br/>
