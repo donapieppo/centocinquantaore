@@ -1,3 +1,2 @@
-import * as bootstrap from "bootstrap"
-import "@hotwired/turbo-rails"
+import "dm_unibo_common";
 import "./controllers";
