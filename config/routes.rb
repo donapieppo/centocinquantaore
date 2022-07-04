@@ -15,8 +15,8 @@ Rails.application.routes.draw do
     resources :rounds 
 
     resources :profiles do
-      put 'close',  on: :member
-      put 'resign', on: :member
+      post 'close',  on: :member
+      post 'resign', on: :member
       resources :punches
     end
 
